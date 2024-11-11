@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Restaurant Orders</h1>
+        
+        <table class="table table-bordered mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Order Details</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.customerName}"></td>
+                    <td th:text="${order.phoneNumber}"></td>
+                    <td th:text="${order.orderDetails}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td>
+                        <form th:action="@{/orders/updateStatus}" method="post" class="d-inline">
+                            <input type="hidden" name="orderId" th:value="${order.id}" />
+                            
+                            <input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
+                            
+                            <button type="submit" name="status" value="ACCEPTED" class="btn btn-success btn-sm">
+                                Accept
+                            </button>
+                            
+                            <button type="submit" name="status" value="DECLINED" class="btn btn-danger btn-sm">
+                                Decline
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
